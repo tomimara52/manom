@@ -66,10 +66,10 @@ void dump_to_file(note_t note, const char* filename) {
     FILE* file_p = fopen(filename, "w");
 
     // make room for the note date and the entries date along with all their separators
-    unsigned int note_length = (ULONG_MAX_DEC_DIGITS + 1) * (note->entries_size + 1) + 1;
+    unsigned int note_length = ULONG_MAX_DEC_DIGITS * (note->entries_size + 1);
     for (unsigned int i = 0; i < note->entries_size; ++i) {
         // length of the entry plus the separator
-        note_length += get_entry_length((note->entries)[i]) + 1; 
+        note_length += get_entry_length((note->entries)[i]) + 2; 
     }
 
     char* note_str = calloc(sizeof(char), note_length);
@@ -82,7 +82,9 @@ void dump_to_file(note_t note, const char* filename) {
 
         unsigned int local_written = sprintf(note_str + total_written + 1, "%s", entry_str);
         total_written += local_written + 1;
-        note_str[total_written] = '\n';
+        note_str[total_written] = '{';
+        note_str[total_written + 1] = '\n';
+        ++total_written;
 
         free(entry_str);
     }
