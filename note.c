@@ -140,7 +140,7 @@ note_t read_note_file(const char* filename) {
 
     unsigned int title_length = length_until_sep(file_p);
     char* title = calloc(sizeof(char), title_length);
-    title[title_length] = 0;
+    title[title_length - 1] = 0;
 
     for (unsigned int i = 0; i < title_length - 1; ++i) {
         title[i] = fgetc(file_p);
@@ -163,7 +163,7 @@ note_t read_note_file(const char* filename) {
 
         unsigned int entry_length = length_until_sep(file_p);
         char* entry_content = calloc(sizeof(char), entry_length);
-        entry_content[entry_length] = 0;
+        entry_content[entry_length - 1] = 0;
 
         for (unsigned int i = 0; i < entry_length - 1; ++i) {
             entry_content[i] = fgetc(file_p);
@@ -172,6 +172,7 @@ note_t read_note_file(const char* filename) {
         add_entry(note, create_entry(entry_content, entry_length, *entry_date_p));
 
         free(entry_date_p);
+        free(entry_content);
     }
 
     return note;
