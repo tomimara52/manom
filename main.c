@@ -34,4 +34,5 @@ int main() {
     dump_to_file(my_note, "my_note.mnm");
 
     destroy_note(my_note);
+    free(entry1_str);
 }
