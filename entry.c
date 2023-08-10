@@ -51,7 +51,7 @@ void print_entry(entry_t entry) {
 }
 
 char* entry_to_str(entry_t entry) {
-    unsigned int str_length = ULONG_MAX_DEC_DIGITS + 2 + entry->length;
+    unsigned int str_length = ULONG_MAX_DEC_DIGITS + 1 + entry->length;
     char* entry_str = calloc(sizeof(char), str_length);
     int date_end = sprintf(entry_str, "%lu", entry->date);
 
@@ -60,8 +60,6 @@ char* entry_to_str(entry_t entry) {
     for (unsigned int i = 0; i < entry->length; ++i) {
         entry_str[date_end + 1 + i] = (entry->content)[i];
     }
-
-    entry_str[str_length] = 0;
 
     return entry_str;
 }
