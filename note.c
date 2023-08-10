@@ -65,32 +65,33 @@ void print_note(note_t note) {
 void dump_to_file(note_t note, const char* filename) {
     FILE* file_p = fopen(filename, "w");
 
-    // make room for the note date and the entries date along with all their separators
-    unsigned int note_length = ULONG_MAX_DEC_DIGITS * (note->entries_size + 1);
-    for (unsigned int i = 0; i < note->entries_size; ++i) {
-        // length of the entry plus the separator
-        note_length += get_entry_length((note->entries)[i]) + 2; 
-    }
+    char* note_date_str = calloc(sizeof(char), ULONG_MAX_DEC_DIGITS + 1);
+    sprintf(note_date_str, "%lu", note->date);
+    fputs(note_date_str, file_p);
+    free(note_date_str);
+    
+    fputc('\n', file_p);
 
-    char* note_str = calloc(sizeof(char), note_length);
-
-    unsigned int total_written = sprintf(note_str, "%lu", note->date); 
-    note_str[total_written] = '\n';
+    fputs(note->title, file_p);
+    fputs("{\n", file_p);
 
     for (unsigned int i = 0; i < note->entries_size; ++i) {
         char* entry_str = entry_to_str((note->entries)[i]);
-
-        unsigned int local_written = sprintf(note_str + total_written + 1, "%s", entry_str);
-        total_written += local_written + 1;
-        note_str[total_written] = '{';
-        note_str[total_written + 1] = '\n';
-        ++total_written;
-
+        fputs(entry_str, file_p);
         free(entry_str);
+        
+        fputs("{\n", file_p);
     }
-
-    fputs(note_str, file_p);
+    fputc(0, file_p);
 
     fclose(file_p);
-    free(note_str);
 }
+
+/*
+note_t read_note_file(const char* filename) {
+    FILE* file_p = fopen(filename, "r");
+    
+    unsigned long* date_p = malloc(sizeof(date_t));
+    fscanf(file_p, "%lu\n", date_p);
+}
+*/
