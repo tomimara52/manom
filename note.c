@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+const char sep[] = "%\n%";
+const unsigned int sep_l = 3;
+
 struct note_s {
     char* title;
     unsigned int title_length;
@@ -73,15 +76,16 @@ void dump_to_file(note_t note, const char* filename) {
     fputc('\n', file_p);
 
     fputs(note->title, file_p);
-    fputs("{\n", file_p);
+    fputs(sep, file_p);
 
     for (unsigned int i = 0; i < note->entries_size; ++i) {
         char* entry_str = entry_to_str((note->entries)[i]);
         fputs(entry_str, file_p);
         free(entry_str);
         
-        fputs("{\n", file_p);
+        fputs(sep, file_p);
     }
+    fputc('\n', file_p);
     fputc(0, file_p);
 
     fclose(file_p);
