@@ -63,3 +63,15 @@ char* entry_to_str(entry_t entry) {
 
     return entry_str;
 }
+
+date_t get_entry_date(entry_t entry) {
+    return entry->date;
+}
+
+unsigned int get_entry_length(entry_t entry) {
+    return entry->length;
+}
+
+char* get_entry_content(entry_t entry) {
+    return entry->content;
+}
