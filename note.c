@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const char sep[] = "%\n%";
-const unsigned int sep_l = 3;
-const char sep_plus_date_format[] = "%%\n%%%lu\n";
+#define SEP "%\n%"
+#define SEP_L 3
+#define SEP_DATE_FORMAT "%%\n%%%lu\n"
 
 struct note_s {
     char* title;
@@ -77,14 +77,14 @@ void dump_to_file(note_t note, const char* filename) {
     fputc('\n', file_p);
 
     fputs(note->title, file_p);
-    fputs(sep, file_p);
+    fputs(SEP, file_p);
 
     for (unsigned int i = 0; i < note->entries_size; ++i) {
         char* entry_str = entry_to_str((note->entries)[i]);
         fputs(entry_str, file_p);
         free(entry_str);
         
-        fputs(sep, file_p);
+        fputs(SEP, file_p);
     }
     fputc('\n', file_p);
     fputc(0, file_p);
@@ -103,11 +103,11 @@ unsigned int length_until_sep(FILE* file_p) {
         
         unsigned int i = 0;
         unsigned int keep_going = 1;
-        while (i < sep_l && keep_going) {
+        while (i < SEP_L && keep_going) {
             char c;
             fscanf(file_p, "%c", &c);
 
-            if (c != sep[i]) {
+            if (c != SEP[i]) {
                 keep_going = 0;
             }
 
@@ -115,7 +115,7 @@ unsigned int length_until_sep(FILE* file_p) {
         }
 
         ++length;
-        if (i == sep_l) {
+        if (i == SEP_L) {
             break;
         }
 
@@ -156,7 +156,7 @@ note_t read_note_file(const char* filename) {
     while (1) {
 
         date_t* entry_date_p = malloc(sizeof(date_t));
-        unsigned int date_scan = fscanf(file_p, sep_plus_date_format, entry_date_p);
+        unsigned int date_scan = fscanf(file_p, SEP_DATE_FORMAT, entry_date_p);
 
         if (date_scan == 0)
             break;
