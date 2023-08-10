@@ -91,11 +91,88 @@ void dump_to_file(note_t note, const char* filename) {
     fclose(file_p);
 }
 
-/*
+unsigned int length_until_sep(FILE* file_p) {
+    unsigned int length = 0;
+    fpos_t return_pos;
+    fgetpos(file_p, &return_pos);
+
+    while (1) {
+        fpos_t next_char_pos;
+        fgetpos(file_p, &next_char_pos);
+        
+        unsigned int i = 0;
+        unsigned int keep_going = 1;
+        while (i < sep_l && keep_going) {
+            char c;
+            fscanf(file_p, "%c", &c);
+
+            if (c != sep[i]) {
+                keep_going = 0;
+            }
+
+            ++i;
+        }
+
+        ++length;
+        if (i == sep_l) {
+            break;
+        }
+
+        fsetpos(file_p, &next_char_pos);
+        fgetc(file_p);
+    }
+
+    fsetpos(file_p, &return_pos);
+
+    return length;
+}
+
 note_t read_note_file(const char* filename) {
+    note_t note = malloc(sizeof(struct note_s));
     FILE* file_p = fopen(filename, "r");
     
-    unsigned long* date_p = malloc(sizeof(date_t));
+    date_t* date_p = malloc(sizeof(date_t));
     fscanf(file_p, "%lu\n", date_p);
+    note->date = *date_p;
+
+    free(date_p);
+
+    unsigned int title_length = length_until_sep(file_p);
+    char* title = calloc(sizeof(char), title_length);
+    title[title_length] = 0;
+
+    for (unsigned int i = 0; i < title_length - 1; ++i) {
+        title[i] = fgetc(file_p);
+    }
+
+    note->title = title;
+    note->title_length = title_length;
+
+    note->entries = NULL;
+    note->entries_size = 0;
+    note->entries_capacity = 0;
+
+    while (1) {
+
+        date_t* entry_date_p = malloc(sizeof(date_t));
+        unsigned int date_scan = fscanf(file_p, "%%\n%%%lu\n", entry_date_p);
+
+        if (date_scan == 0)
+            break;
+
+        unsigned int entry_length = length_until_sep(file_p);
+        char* entry_content = calloc(sizeof(char), entry_length);
+        entry_content[entry_length] = 0;
+
+        for (unsigned int i = 0; i < entry_length - 1; ++i) {
+            entry_content[i] = fgetc(file_p);
+        }
+
+        add_entry(note, create_entry(entry_content, entry_length, *entry_date_p));
+
+        free(entry_date_p);
+    }
+
+    return note;
+    
 }
-*/

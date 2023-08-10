@@ -14,3 +14,5 @@ void destroy_note(note_t note);
 void print_note(note_t note);
 
 void dump_to_file(note_t note, const char* filename);
+
+note_t read_note_file(const char* filename);
