@@ -78,11 +78,13 @@ void dump_to_file(note_t note, const char* filename) {
     note_str[total_written] = '\n';
 
     for (unsigned int i = 0; i < note->entries_size; ++i) {
-        entry_t entry = (note->entries)[i];
+        char* entry_str = entry_to_str((note->entries)[i]);
 
-        unsigned int local_written = sprintf(note_str + total_written + 1, "%s", entry_to_str(entry));
+        unsigned int local_written = sprintf(note_str + total_written + 1, "%s", entry_str);
         total_written += local_written + 1;
         note_str[total_written] = '\n';
+
+        free(entry_str);
     }
 
     fputs(note_str, file_p);
