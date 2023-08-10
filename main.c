@@ -9,11 +9,12 @@ int main() {
     print_entry(entry0);
 
     char text[] = "greetings, universe";
+    char text1[] = "omg starbucks";
 
     entry_t entry1 = create_entry(text, 20, create_date(2023, 8, 17));
     print_entry(entry1);
 
-    entry_t entry2 = create_entry(text, 20, create_date(0, 0, 0));
+    entry_t entry2 = create_entry(text1, 14, create_date(2021, 2, 1));
     print_entry(entry2);
 
     note_t my_note = create_note("My first note", 14, create_date(2023, 8, 16));
@@ -29,6 +30,8 @@ int main() {
 
     char* entry1_str = entry_to_str(entry1);
     printf("%s\n", entry1_str);
+
+    dump_to_file(my_note, "my_note.mnm");
 
     destroy_note(my_note);
 }
