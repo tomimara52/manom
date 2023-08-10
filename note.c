@@ -6,6 +6,7 @@
 
 const char sep[] = "%\n%";
 const unsigned int sep_l = 3;
+const char sep_plus_date_format[] = "%%\n%%%lu\n";
 
 struct note_s {
     char* title;
@@ -155,7 +156,7 @@ note_t read_note_file(const char* filename) {
     while (1) {
 
         date_t* entry_date_p = malloc(sizeof(date_t));
-        unsigned int date_scan = fscanf(file_p, "%%\n%%%lu\n", entry_date_p);
+        unsigned int date_scan = fscanf(file_p, sep_plus_date_format, entry_date_p);
 
         if (date_scan == 0)
             break;
