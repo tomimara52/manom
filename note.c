@@ -36,7 +36,7 @@ void add_entry(note_t note, entry_t entry) {
         (note->entries)[(note->entries_size)++] = entry;
     else {
         note->entries_capacity = note->entries_capacity ? note->entries_capacity*2 : 1;
-        note->entries = reallocarray(note->entries, sizeof(entry_t), note->entries_capacity);
+        note->entries = realloc(note->entries, sizeof(entry_t) * note->entries_capacity);
         (note->entries)[(note->entries_size)++] = entry;
     }
 }
