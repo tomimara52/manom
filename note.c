@@ -186,3 +186,7 @@ note_t read_note_file(const char* filename) {
     return note;
     
 }
+
+char* get_note_title(note_t note) {
+    return note->title;
+}
