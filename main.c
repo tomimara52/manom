@@ -71,10 +71,9 @@ note_t select_note() {
 }
 
 int main() {
-    printf("Do you want to create or select a note? [c/s]: ");    
-
     char choice = 0;
     while (!choice) {
+        printf("Do you want to create or select a note? [c/s]: ");    
         scanf("%s", &choice);
 
         if (choice != 's') {
