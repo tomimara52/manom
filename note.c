@@ -115,14 +115,18 @@ unsigned int length_until_sep(FILE* file_p) {
         }
 
         ++length;
+        // stop when I find all the elements of the separator
         if (i == SEP_L) {
             break;
         }
 
+        // set the position to the first char i read
         fsetpos(file_p, &next_char_pos);
+        // advance the position by 1, to read the next 3 chars
         fgetc(file_p);
     }
 
+    // return the position to where it started
     fsetpos(file_p, &return_pos);
 
     return length;
@@ -138,10 +142,12 @@ note_t read_note_file(const char* filename) {
 
     free(date_p);
 
+    // get the amount of chars from where pointer is to next separator
     unsigned int title_length = length_until_sep(file_p);
     char* title = calloc(sizeof(char), title_length);
     title[title_length - 1] = 0;
 
+    // read every char that belongs to the title
     for (unsigned int i = 0; i < title_length - 1; ++i) {
         title[i] = fgetc(file_p);
     }
@@ -158,6 +164,7 @@ note_t read_note_file(const char* filename) {
         date_t entry_date_p;
         unsigned int date_scan = fscanf(file_p, SEP_DATE_FORMAT, &entry_date_p);
 
+        // if it didn't read the pattern is because I reached the end of the file (maybe)
         if (date_scan == 0)
             break;
 
