@@ -41,6 +41,14 @@ note_t select_note() {
         }
     }
 
+    if (n_note_files == 0) {
+        printf("There are not .mnm files in this directory\n");
+        closedir(dir_p);
+        free(note_file_names);
+
+        return NULL;
+    }
+
     char* file_chosen = NULL;
     while (!file_chosen) {
         unsigned int choice;
