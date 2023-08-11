@@ -155,8 +155,8 @@ note_t read_note_file(const char* filename) {
 
     while (1) {
 
-        date_t* entry_date_p = malloc(sizeof(date_t));
-        unsigned int date_scan = fscanf(file_p, SEP_DATE_FORMAT, entry_date_p);
+        date_t entry_date_p;
+        unsigned int date_scan = fscanf(file_p, SEP_DATE_FORMAT, &entry_date_p);
 
         if (date_scan == 0)
             break;
@@ -169,11 +169,12 @@ note_t read_note_file(const char* filename) {
             entry_content[i] = fgetc(file_p);
         }
 
-        add_entry(note, create_entry(entry_content, entry_length, *entry_date_p));
+        add_entry(note, create_entry(entry_content, entry_length, entry_date_p));
 
-        free(entry_date_p);
         free(entry_content);
     }
+
+    fclose(file_p);
 
     return note;
     
