@@ -89,6 +89,10 @@ int main() {
         return 0;
     }
 
+    printf("\tp\tPrint the selected note.\n"
+           "\tq\tQuit program.\n"
+           "\th\tDisplay this menu.\n");
+
     int quit = 0;
     while (!quit) {
         printf("(%s)> ", get_note_title(note));
@@ -100,6 +104,11 @@ int main() {
             break;
         case 'q':
             quit = 1;
+            break;
+        case 'h':
+            printf("\tp\tPrint the selected note.\n"
+                   "\tq\tQuit program.\n"
+                   "\th\tDisplay this menu.\n");
             break;
         default:
             printf("Invalid choice\n");
