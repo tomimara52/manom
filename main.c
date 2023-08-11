@@ -83,7 +83,30 @@ int main() {
     }
 
     note_t note = select_note();
-    print_note(note);
+
+    if (!note) {
+        printf("Bye\n");
+        return 0;
+    }
+
+    int quit = 0;
+    while (!quit) {
+        printf("(%s)> ", get_note_title(note));
+        scanf("%s", &choice);
+
+        switch (choice) {
+        case 'p':
+            print_note(note);
+            break;
+        case 'q':
+            quit = 1;
+            break;
+        default:
+            printf("Invalid choice\n");
+        }
+    }
 
     destroy_note(note);
+    return 0;
+
 }
