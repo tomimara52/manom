@@ -4,6 +4,8 @@
 #include <dirent.h>
 
 #include "note.h"
+#include "entry.h"
+#include "utils.h"
 
 note_t select_note() {
     DIR* dir_p = opendir(".");
@@ -71,26 +73,43 @@ note_t select_note() {
     return note;
 }
 
+note_t create_note_i() {
+    printf("Please type the title of the new note\n");
+    printf("When finished typing entry, press CTRL-D in a newline or CTRL-D twice\n");
+
+    char* title = NULL;
+    unsigned int title_length = undef_length_str_stdin(&title);
+
+    printf("\n");
+    
+    note_t note = create_note(title, title_length, get_current_date());
+
+    free(title);
+
+    return note;
+} 
+
 int main() {
     char choice = 0;
     do {
         printf("Do you want to create or select a note? [c/s]: ");    
         scanf("%s", &choice);
 
-        if (choice != 's') {
+        if (choice != 's' && choice != 'c') {
             printf("Invalid option\n");
             choice = 0;
         }
     } while (!choice);
+    getchar();
 
-    note_t note = select_note();
+    note_t note = (choice == 's') ? select_note() : create_note_i();
 
     if (!note) {
         printf("Bye\n");
         return 0;
     }
 
-    printf("\tp\tPrint the selected note.\n"
+    printf("\tp\tPrint the current note.\n"
            "\ta\tAdd new entry to selected note.\n"
            "\tq\tQuit program.\n"
            "\th\tDisplay this menu.\n");
