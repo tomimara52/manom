@@ -1,0 +1,12 @@
+#+title:My config file for emacs
+#+author: Tomás Maraschio
+
+* Maybe A NOte Manager
+  Man are C strings awful
+
+* Compilation
+  make
+
+* Usage
+  Interactively create notes that you can save in .mnm files.
+  Pretty useless program right?
