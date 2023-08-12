@@ -87,7 +87,27 @@ note_t create_note_i() {
     free(title);
 
     return note;
-} 
+}
+
+void save_note_to_file(note_t note) {
+    printf("Please type the name of the file to save (without the file extension)\n");
+    printf("When finished typing entry, press CTRL-D in a newline or CTRL-D twice\n");
+
+    char* filename = NULL;
+    unsigned int filename_length = undef_length_str_stdin(&filename);
+
+    // add .mnm extension
+    filename = realloc(filename, filename_length + 4);
+    filename[filename_length - 1] = '.';
+    filename[filename_length]     = 'm';
+    filename[filename_length + 1] = 'n';
+    filename[filename_length + 2] = 'm';
+    filename[filename_length + 3] = 0;
+
+    dump_to_file(note, filename);
+
+    free(filename);
+}
 
 int main() {
     char choice = 0;
@@ -111,6 +131,7 @@ int main() {
 
     printf("\tp\tPrint the current note.\n"
            "\ta\tAdd new entry to selected note.\n"
+           "\ts\tSave note to file.\n"
            "\tq\tQuit program.\n"
            "\th\tDisplay this menu.\n");
 
@@ -132,9 +153,13 @@ int main() {
             printf("When finished typing entry, press CTRL-D in a newline or CTRL-D twice\n");
             add_entry(note, create_entry_from_stdin());
             break;
+        case 's':
+            save_note_to_file(note);
+            break;
         case 'h':
             printf("\tp\tPrint the selected note.\n"
                    "\ta\tAdd new entry to selected note.\n"
+                   "\ts\tSave note to file.\n"
                    "\tq\tQuit program.\n"
                    "\th\tDisplay this menu.\n");
             break;
