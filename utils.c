@@ -18,7 +18,7 @@ unsigned int undef_length_str_stdin(char** str) {
         unsigned int read_length = strlen(text);
 
         // realloc to the size it has + the amount i read + the null character
-        *str = realloc(*str, acc_size + read_length + 1);
+        *str = realloc(*str, (acc_size + read_length + 1) * sizeof(char));
         // write in content + acc_size to not overwrite previous
         sprintf(*str + acc_size, "%s", text);
         // only add read_length and not + 1 for null character because I only want a null

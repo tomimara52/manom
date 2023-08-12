@@ -82,12 +82,12 @@ char* get_entry_content(entry_t entry) {
 entry_t create_entry_from_stdin() {
     char* content = NULL;
 
-    unsigned int acc_size = undef_length_str_stdin(&content);
+    unsigned int length = undef_length_str_stdin(&content);
 
     time_t res = time(NULL);
     struct tm* lcl_tm = localtime(&res);
 
-    entry_t entry = create_entry(content, acc_size + 1,
+    entry_t entry = create_entry(content, length,
                                  create_date(lcl_tm->tm_year + 1900, lcl_tm->tm_mon + 1, lcl_tm->tm_mday));
 
     free(content);
