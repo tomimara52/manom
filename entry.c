@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 
 #include "entry.h"
 #include "date.h"
@@ -84,11 +83,7 @@ entry_t create_entry_from_stdin() {
 
     unsigned int length = undef_length_str_stdin(&content);
 
-    time_t res = time(NULL);
-    struct tm* lcl_tm = localtime(&res);
-
-    entry_t entry = create_entry(content, length,
-                                 create_date(lcl_tm->tm_year + 1900, lcl_tm->tm_mon + 1, lcl_tm->tm_mday));
+    entry_t entry = create_entry(content, length, get_current_date());
 
     free(content);
 

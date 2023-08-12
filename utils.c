@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "utils.h"
 
@@ -36,4 +37,12 @@ unsigned int undef_length_str_stdin(char** str) {
     clearerr(stdin);
 
     return acc_size + 1;
+}
+
+date_t get_current_date() {
+    time_t res = time(NULL);
+    struct tm* lcl_tm = localtime(&res);
+    return create_date(lcl_tm->tm_year + 1900,
+                       lcl_tm->tm_mon + 1,
+                       lcl_tm->tm_mday);
 }
