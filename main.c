@@ -72,7 +72,7 @@ note_t select_note() {
 
 int main() {
     char choice = 0;
-    while (!choice) {
+    do {
         printf("Do you want to create or select a note? [c/s]: ");    
         scanf("%s", &choice);
 
@@ -80,7 +80,7 @@ int main() {
             printf("Invalid option\n");
             choice = 0;
         }
-    }
+    } while (!choice);
 
     note_t note = select_note();
 
