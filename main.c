@@ -50,15 +50,16 @@ note_t select_note() {
     }
 
     char* file_chosen = NULL;
+    unsigned int choice;
     while (!file_chosen) {
-        unsigned int choice;
         printf("Select which note you wanna select [1-%u]: ", n_note_files);
-        scanf("%u", &choice);
 
-        if (1 <= choice && choice <= n_note_files) {
+        if ((scanf("%u", &choice)) && 1 <= choice && choice <= n_note_files) {
             file_chosen = note_file_names[choice - 1];
         } else {
             printf("Invalid choice\n");
+            // consume newline
+            getchar();
         }
     }
 
