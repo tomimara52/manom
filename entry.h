@@ -21,3 +21,5 @@ date_t get_entry_date(entry_t entry);
 unsigned int get_entry_length(entry_t entry);
 
 char* get_entry_content(entry_t entry);
+
+entry_t create_entry_from_stdin();
