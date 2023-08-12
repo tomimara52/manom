@@ -90,13 +90,16 @@ int main() {
     }
 
     printf("\tp\tPrint the selected note.\n"
+           "\ta\tAdd new entry to selected note.\n"
            "\tq\tQuit program.\n"
            "\th\tDisplay this menu.\n");
 
     int quit = 0;
     while (!quit) {
-        printf("(%s)> ", get_note_title(note));
+        printf("\n(%s)> ", get_note_title(note));
         scanf("%s", &choice);
+        // consume newline
+        getchar();
 
         switch (choice) {
         case 'p':
@@ -105,8 +108,13 @@ int main() {
         case 'q':
             quit = 1;
             break;
+        case 'a':
+            printf("When finished typing entry, press CTRL-D in a newline or CTRL-D twice\n");
+            add_entry(note, create_entry_from_stdin());
+            break;
         case 'h':
             printf("\tp\tPrint the selected note.\n"
+                   "\ta\tAdd new entry to selected note.\n"
                    "\tq\tQuit program.\n"
                    "\th\tDisplay this menu.\n");
             break;
