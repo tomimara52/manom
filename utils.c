@@ -5,7 +5,7 @@
 
 #include "utils.h"
 
-unsigned int undef_length_str_stdin(char** str) {
+unsigned int undef_length_str_stdin(char** str, int allow_newlines) {
     char text[256];
     unsigned int acc_size = 0;
 
@@ -29,6 +29,14 @@ unsigned int undef_length_str_stdin(char** str) {
      
         // if EOF sent in middle of input
         if (feof(stdin)) {
+            break;
+        }
+
+        if (!allow_newlines) {
+            // remove last '\n'
+            (*str)[acc_size - 1] = 0;
+            // decrease str length
+            --acc_size;
             break;
         }
     }

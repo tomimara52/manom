@@ -75,10 +75,9 @@ note_t select_note() {
 
 note_t create_note_i() {
     printf("Please type the title of the new note\n");
-    printf("When finished typing entry, press CTRL-D in a newline or CTRL-D twice\n");
 
     char* title = NULL;
-    unsigned int title_length = undef_length_str_stdin(&title);
+    unsigned int title_length = undef_length_str_stdin(&title, 0);
 
     printf("\n");
     
@@ -91,10 +90,9 @@ note_t create_note_i() {
 
 void save_note_to_file(note_t note) {
     printf("Please type the name of the file to save (without the file extension)\n");
-    printf("When finished typing entry, press CTRL-D in a newline or CTRL-D twice\n");
 
     char* filename = NULL;
-    unsigned int filename_length = undef_length_str_stdin(&filename);
+    unsigned int filename_length = undef_length_str_stdin(&filename, 0);
 
     // add .mnm extension
     filename = realloc(filename, filename_length + 4);
