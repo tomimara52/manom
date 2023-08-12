@@ -127,11 +127,14 @@ int main() {
         return 0;
     }
 
-    printf("\tp\tPrint the current note.\n"
-           "\ta\tAdd new entry to selected note.\n"
-           "\ts\tSave note to file.\n"
-           "\tq\tQuit program.\n"
-           "\th\tDisplay this menu.\n");
+    static const char help_str[] = "\tp\tPrint the current note.\n"
+                                   "\ta\tAdd new entry to selected note.\n"
+                                   "\ts\tSave note to file.\n"
+                                   "\tq\tQuit program.\n"
+                                   "\th\tDisplay this menu.\n";
+
+    printf("%s", help_str);
+        
 
     int quit = 0;
     while (!quit) {
@@ -155,11 +158,7 @@ int main() {
             save_note_to_file(note);
             break;
         case 'h':
-            printf("\tp\tPrint the selected note.\n"
-                   "\ta\tAdd new entry to selected note.\n"
-                   "\ts\tSave note to file.\n"
-                   "\tq\tQuit program.\n"
-                   "\th\tDisplay this menu.\n");
+            printf("%s", help_str);
             break;
         default:
             printf("Invalid choice\n");
