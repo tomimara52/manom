@@ -105,11 +105,16 @@ unsigned int length_until_sep(FILE* file_p) {
         unsigned int keep_going = 1;
         while (i < SEP_L && keep_going) {
             char c;
-            fscanf(file_p, "%c", &c);
+
+            if ((fscanf(file_p, "%c", &c)) == EOF) {
+                printf("ERROR: Invalid file format\n");
+                exit(1);
+            }
 
             if (c != SEP[i]) {
                 keep_going = 0;
             }
+
 
             ++i;
         }
