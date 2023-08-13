@@ -77,7 +77,7 @@ note_t create_note_i() {
     printf("Please type the title of the new note\n");
 
     char* title = NULL;
-    unsigned int title_length = undef_length_str_stdin(&title, 0);
+    unsigned int title_length = undef_length_str_stdin(&title, 0, 0);
 
     printf("\n");
     
@@ -92,15 +92,15 @@ void save_note_to_file(note_t note) {
     printf("Please type the name of the file to save (without the file extension)\n");
 
     char* filename = NULL;
-    unsigned int filename_length = undef_length_str_stdin(&filename, 0);
+    // read title and make room for .mnm extension
+    unsigned int filename_length = undef_length_str_stdin(&filename, 0, 4);
 
     // add .mnm extension
-    filename = realloc(filename, filename_length + 4);
-    filename[filename_length - 1] = '.';
-    filename[filename_length]     = 'm';
-    filename[filename_length + 1] = 'n';
-    filename[filename_length + 2] = 'm';
-    filename[filename_length + 3] = 0;
+    filename[filename_length - 5] = '.';
+    filename[filename_length - 4] = 'm';
+    filename[filename_length - 3] = 'n';
+    filename[filename_length - 2] = 'm';
+    filename[filename_length - 1] = 0;
 
     dump_to_file(note, filename);
 

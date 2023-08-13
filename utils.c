@@ -5,9 +5,10 @@
 
 #include "utils.h"
 
-unsigned int undef_length_str_stdin(char** str, int allow_newlines) {
+unsigned int undef_length_str_stdin(char** str, int allow_newlines, unsigned int excess_size) {
     char text[256];
     unsigned int acc_size = 0;
+    *str = calloc(sizeof(char), excess_size);
 
     while (1) {
         char* check = fgets(text, 256, stdin);
@@ -19,7 +20,7 @@ unsigned int undef_length_str_stdin(char** str, int allow_newlines) {
         unsigned int read_length = strlen(text);
 
         // realloc to the size it has + the amount i read + the null character
-        *str = realloc(*str, (acc_size + read_length + 1) * sizeof(char));
+        *str = realloc(*str, (excess_size + acc_size + read_length + 1) * sizeof(char));
         // write in content + acc_size to not overwrite previous
         sprintf(*str + acc_size, "%s", text);
         // only add read_length and not + 1 for null character because I only want a null
@@ -44,7 +45,7 @@ unsigned int undef_length_str_stdin(char** str, int allow_newlines) {
     // make stdin not EOF
     clearerr(stdin);
 
-    return acc_size + 1;
+    return acc_size + 1 + excess_size;
 }
 
 date_t get_current_date() {

@@ -81,7 +81,7 @@ char* get_entry_content(entry_t entry) {
 entry_t create_entry_from_stdin() {
     char* content = NULL;
 
-    unsigned int length = undef_length_str_stdin(&content, 1);
+    unsigned int length = undef_length_str_stdin(&content, 1, 0);
 
     entry_t entry = create_entry(content, length, get_current_date());
 
